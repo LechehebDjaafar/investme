@@ -7,15 +7,40 @@ class AgeGenderScreen extends StatefulWidget {
   _AgeGenderScreenState createState() => _AgeGenderScreenState();
 }
 
-
 class _AgeGenderScreenState extends State<AgeGenderScreen> {
-  int? selectedAge;
-  String? selectedGender;
+  DateTime? selectedDate; // تاريخ الميلاد
+  String? selectedGender; // الجنس
+
+  // دالة لاختيار تاريخ الميلاد
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color(0xFF4A90E2), // أزرق فاتح
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFF1E2A47), // خلفية أزرق داكن
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -27,53 +52,61 @@ class _AgeGenderScreenState extends State<AgeGenderScreen> {
               style: GoogleFonts.poppins(
                 fontSize: 26,
                 fontWeight: FontWeight.bold,
-                color: Colors.black87,
+                color: Colors.white, // نص أبيض
               ),
             ),
             const SizedBox(height: 10),
             Text(
-              "Select your age and gender to continue",
+              "Select your date of birth and gender to continue",
               style: GoogleFonts.poppins(
                 fontSize: 16,
-                color: Colors.black54,
+                color: Colors.white70, // نص رمادي فاتح
               ),
             ),
             const SizedBox(height: 40),
-
-            // Age Selector
+            // Date of Birth Selector
             Text(
-              "Select Age",
+              "Date of Birth",
               style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
+                color: Colors.white, // نص أبيض
               ),
             ),
             const SizedBox(height: 10),
-            DropdownButton<int>(
-              value: selectedAge,
-              hint: Text("Choose your age"),
-              isExpanded: true,
-              items: List.generate(
-                100,
-                (index) => DropdownMenuItem(
-                  value: index + 1,
-                  child: Text("${index + 1} years"),
+            InkWell(
+              onTap: () => _selectDate(context),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white54),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      selectedDate == null
+                          ? "Select your date of birth"
+                          : "${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}",
+                      style: TextStyle(
+                        color: selectedDate == null ? Colors.white70 : Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                    Icon(Icons.calendar_today, color: Colors.white70),
+                  ],
                 ),
               ),
-              onChanged: (value) {
-                setState(() {
-                  selectedAge = value;
-                });
-              },
             ),
             const SizedBox(height: 30),
-
             // Gender Selector
             Text(
               "Select Gender",
               style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
+                color: Colors.white, // نص أبيض
               ),
             ),
             const SizedBox(height: 10),
@@ -82,33 +115,27 @@ class _AgeGenderScreenState extends State<AgeGenderScreen> {
               children: [
                 _buildGenderButton("Male", Icons.male),
                 _buildGenderButton("Female", Icons.female),
-                _buildGenderButton("Other", Icons.transgender),
               ],
             ),
             const Spacer(),
-
             // Next Button
             ElevatedButton(
-              onPressed: selectedAge != null && selectedGender != null
+              onPressed: selectedDate != null && selectedGender != null
                   ? () {
-                      context.go('/onboarding/role-selection'); // انتقل لشاشة اختيار الدور // انتقل للصفحة التالية
+                      context.go('/onboarding/role-selection');
                     }
-                  : null, // عطل الزر إذا لم يتم اختيار العمر والجنس
+                  : null, // عطل الزر إذا لم يتم اختيار التاريخ أو الجنس
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                minimumSize: const Size(double.infinity, 50),
+                backgroundColor: const Color(0xFFF4B400), // زر ذهبي
+                foregroundColor: Colors.white, // نص أبيض
+                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
               child: Text(
                 "Continue",
-                style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
+                style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600),
               ),
             ),
             const SizedBox(height: 20),
@@ -118,6 +145,7 @@ class _AgeGenderScreenState extends State<AgeGenderScreen> {
     );
   }
 
+  // زر اختيار الجنس
   Widget _buildGenderButton(String gender, IconData icon) {
     return GestureDetector(
       onTap: () {
@@ -126,16 +154,20 @@ class _AgeGenderScreenState extends State<AgeGenderScreen> {
         });
       },
       child: Container(
-        width: 90,
-        height: 90,
+        width: 120,
+        height: 120,
         decoration: BoxDecoration(
-          color: selectedGender == gender ? Colors.blueAccent : Colors.grey[200],
+          color: selectedGender == gender ? const Color(0xFFF4B400) : Colors.grey[200],
           borderRadius: BorderRadius.circular(15),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 40, color: selectedGender == gender ? Colors.white : Colors.black54),
+            Icon(
+              icon,
+              size: 40,
+              color: selectedGender == gender ? Colors.white : Colors.black54,
+            ),
             const SizedBox(height: 5),
             Text(
               gender,

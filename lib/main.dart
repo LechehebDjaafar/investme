@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'router.dart'; // استيراد ملف router.dart
+import 'core/theme.dart'; // استيراد Thema
 
 void main() {
   runApp(MyApp());
@@ -15,11 +16,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'InvestMe',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-        useMaterial3: true,
-      ),
-      routerConfig: _router, // استخدام GoRouter هنا
+      theme: appTheme(), // استخدام Thema المخصص
+      routerConfig: _router,
     );
   }
 }

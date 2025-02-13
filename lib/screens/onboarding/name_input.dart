@@ -21,7 +21,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF1E2A47),
+      backgroundColor: const Color(0xFF1E2A47), // خلفية أزرق داكن
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -33,49 +33,46 @@ class _NameInputScreenState extends State<NameInputScreen> {
               style: GoogleFonts.poppins(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Colors.white, // نص أبيض
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               controller: _firstNameController,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white), // نص أبيض
               decoration: InputDecoration(
                 labelText: "First Name",
-                labelStyle: TextStyle(color: Colors.white70),
+                labelStyle: TextStyle(color: Colors.white70), // نص رمادي فاتح
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white54),
+                  borderSide: BorderSide(color: Colors.white54), // حدود رمادية
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blueAccent),
+                  borderSide: BorderSide(color: const Color(0xFF4A90E2)), // حدود زرقاء فاتحة
                 ),
               ),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             TextField(
               controller: _lastNameController,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white), // نص أبيض
               decoration: InputDecoration(
                 labelText: "Last Name",
-                labelStyle: TextStyle(color: Colors.white70),
+                labelStyle: TextStyle(color: Colors.white70), // نص رمادي فاتح
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white54),
+                  borderSide: BorderSide(color: Colors.white54), // حدود رمادية
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blueAccent),
+                  borderSide: BorderSide(color: const Color(0xFF4A90E2)), // حدود زرقاء فاتحة
                 ),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Center(
               child: ElevatedButton(
-                onPressed: () => _goToNextStep(context), // تمرير السياق (context)
+                onPressed: () => _goToNextStep(context),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFF4B400),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  backgroundColor: const Color(0xFFF4B400), // زر ذهبي
+                  foregroundColor: Colors.white, // نص أبيض
                 ),
                 child: Text(
                   "Continue",
