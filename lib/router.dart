@@ -6,6 +6,7 @@ import 'screens/onboarding/name_input.dart' as nameInput;
 import 'screens/onboarding/age_gender.dart' as ageGender;
 import 'screens/onboarding/investor_or_entrepreneur.dart' as roleSelection;
 import 'screens/onboarding/home.dart' as home;
+import '/screens/auth/login.dart' as login;
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
@@ -45,6 +46,11 @@ final GoRouter router = GoRouter(
     final String? userRole = state.extra as String?;
     return emailpassword.EmailPasswordScreen(userRole: userRole ?? 'Investor');
   },
+),
+GoRoute(
+  path: '/login',
+  name: 'login',
+  builder: (context, state) => login.LoginScreen(),
 ),
   ],
 );
