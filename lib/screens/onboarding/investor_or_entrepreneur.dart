@@ -49,7 +49,7 @@ class _InvestorOrEntrepreneurScreenState
               onPressed: selectedRole != null
                   ? () {
                       // الانتقال إلى الصفحة الرئيسية مع تمرير الدور المختار
-                      context.go('/home', extra: selectedRole);
+                      context.go('/onboarding/email-password', extra: selectedRole);
                     }
                   : null, // عطل الزر إذا لم يتم اختيار الدور
               style: ElevatedButton.styleFrom(

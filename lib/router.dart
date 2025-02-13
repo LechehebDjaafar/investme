@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'screens/onboarding/splash_screen.dart' as splash;
+import 'screens/onboarding/email_password.dart' as emailpassword;
 import 'screens/onboarding/name_input.dart' as nameInput;
 import 'screens/onboarding/age_gender.dart' as ageGender;
 import 'screens/onboarding/investor_or_entrepreneur.dart' as roleSelection;
@@ -37,5 +38,13 @@ final GoRouter router = GoRouter(
         return home.HomeScreen(userRole: userRole ?? 'Investor');
       },
     ),
+    GoRoute(
+  path: '/onboarding/email-password',
+  name: 'email-password',
+  builder: (context, state) {
+    final String? userRole = state.extra as String?;
+    return emailpassword.EmailPasswordScreen(userRole: userRole ?? 'Investor');
+  },
+),
   ],
 );
